@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title></title>
+</head>
+<body>
+<h1>test</h1>
+</body>
+<script>
+    var users = [];
+    $(document).ready(function(){
+        var addStatus = false
+        $('body').on('click','.add-user',function(){
+            addStatus = true
+            $('.user-table').hide();
+            $('.create-user-form').show();
+        });
+        var i = 0;
+        $('body').on('click','.user-save',function(){
+
+            var name=$('.name').val();
+            var email=$('.email').val();
+            var user = {
+            	name: name,
+            	email: email
+            }
+            if(addStatus){
+            	users.push(user);
+            }else{
+            	users[editId] = user;
+            }
+            $('.create-user-form').hide();
+            userShow();
+            //$('.user-table').show();
+        });
+        function userShow(){
+        	var html = '';
+        	$.each(users, function(index, val){
+        		html +='<tr>'+
+                                    '<td><input type="text" name="name" value="'+val.name+'" class="username" id="'+i+'">'+'</td>'+
+                                    '<td><input type="text" name="name" value="'+val.email+'" class="useremail">'+'</td>'+
+                                    '<td>'+'<button class="btn btn-primary edit-user" data-id="'+index+'">Edit</button>'+'</td>'+
+                                    '</tr>';
+        	});
+        	$('tbody').html(html)
+        	$('.user-table').show();
+        }
+        var editId = ''
+        $('body').on('click','.edit-user',function(){
+        	editId = $(this).attr('data-id');
+            addStatus = false
+            $('.user-table').hide();
+            $('.create-user-form').show();
+            var username=$('.username').val();
+            var useremail=$('.useremail').val();
+            $('.name').val(username);
+            $('.email').val(useremail); 
+        });
+    })
+</script>
+</html>
